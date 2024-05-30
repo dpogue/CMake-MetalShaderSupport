@@ -1,0 +1,4 @@
+*.air
+*.metallib
+*.metal-ar
+build
