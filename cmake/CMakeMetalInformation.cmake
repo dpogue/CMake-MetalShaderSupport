@@ -41,4 +41,17 @@ if(NOT CMAKE_Metal_CREATE_STATIC_LIBRARY)
     set(CMAKE_Metal_CREATE_STATIC_LIBRARY "${CMAKE_Metal_COMPILER_AR} crs <TARGET> <OBJECTS>")
 endif()
 
+if(NOT CMAKE_Metal_CREATE_SHARED_LIBRARY)
+    set(CMAKE_Metal_CREATE_SHARED_LIBRARY "${CMAKE_Metal_COMPILER_LINKER} <CMAKE_SHARED_LIBRARY_Metal_FLAGS> <LINK_FLAGS> -o <TARGET> <OBJECTS> <LINK_LIBRARIES>")
+endif()
+
+if(NOT CMAKE_Metal_CREATE_SHARED_MODULE)
+    set(CMAKE_Metal_CREATE_SHARED_MODULE "${CMAKE_Metal_CREATE_SHARED_LIBRARY}")
+endif()
+
+if(NOT CMAKE_Metal_LINK_EXECUTABLE)
+    # Metal shaders don't really have "executables", but we need this for the try_compile to work properly, so we'll just have it output a metallib file (identical to the "shared library" configuration)
+    set(CMAKE_Metal_LINK_EXECUTABLE "${CMAKE_Metal_CREATE_SHARED_LIBRARY}")
+endif()
+
 set(CMAKE_Metal_INFORMATION_LOADED 1)

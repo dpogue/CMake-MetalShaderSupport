@@ -17,8 +17,7 @@ include (CMakeTestCompilerCommon)
 # any makefiles or projects.
 if(NOT CMAKE_Metal_COMPILER_WORKS)
     PrintTestCompilerStatus("Metal")
-    #__TestCompiler_setTryCompileTargetType()
-    set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+    __TestCompiler_setTryCompileTargetType()
 
     string(CONCAT __TestCompiler_testMetalCompilerSource
         "#ifndef __METAL_VERSION__\n"
@@ -39,8 +38,7 @@ if(NOT CMAKE_Metal_COMPILER_WORKS)
     # Move result from cache to normal variable.
     set(CMAKE_Metal_COMPILER_WORKS ${CMAKE_Metal_COMPILER_WORKS})
     unset(CMAKE_Metal_COMPILER_WORKS CACHE)
-    #__TestCompiler_restoreTryCompileTargetType()
-    unset(CMAKE_TRY_COMPILE_TARGET_TYPE)
+    __TestCompiler_restoreTryCompileTargetType()
     set(METAL_TEST_WAS_RUN 1)
 endif()
 
