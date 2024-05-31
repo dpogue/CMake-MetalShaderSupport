@@ -28,8 +28,18 @@ add_dependencies(ExampleApp ShaderBase)
 set_target_properties(ExampleApp PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist"
     RESOURCE "${ExampleApp_RESOURCES}"
-    XCODE_EMBED_RESOURCES ShaderBase
 )
+
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.28 AND ${CMAKE_GENERATOR} STREQUAL "Xcode")
+    set_target_properties(ExampleApp PROPERTIES
+        XCODE_EMBED_RESOURCES ShaderBase
+    )
+else()
+    add_custom_command(TARGET ExampleApp POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:ShaderBase>" "$<TARGET_BUNDLE_CONTENT_DIR:ExampleApp>/Resources/$<TARGET_FILE_NAME:ShaderBase>"
+        VERBATIM
+    )
+endif()
 
 target_link_libraries(ExampleApp
     PRIVATE
