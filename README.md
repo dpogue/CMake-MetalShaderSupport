@@ -53,14 +53,24 @@ There are a few different ways to compose shader library targets, including some
 Your final shader library will need to be a `.metallib` file that can be included in your application as a resource. You should define these as `MODULE` libraries rather than `SHARED` libraries because they do not expose symbols that can be linked with other targets.
 
 ```cmake
-add_library(full_shader MODULE
+add_library(shaders MODULE
     shader1.metal
     shader2.metal
+)
+
+# To make it work properly in Xcode with the Xcode project generator:
+set_target_properties(shaders PROPERTIES
+    XCODE_PRODUCT_TYPE com.apple.product-type.metal-library
+    SUFFIX ".metallib"
+    PREFIX ""
 )
 ```
 
 
 ### Static Archives (.metal-ar)
+
+> [!CAUTION]
+> This is not supported with the Xcode project generator.
 
 You can compile shaders to a static archive as a `.metal-ar` file that can be linked together with other archives and shaders into a Metal library.
 
@@ -86,6 +96,9 @@ target_link_libraries(full_shader
 
 ### Object Files (.air)
 
+> [!CAUTION]
+> This is not supported with the Xcode project generator.
+
 You can also compile shaders to a loose collection of `.air` bitcode files by defining an object library, and then include those shader objects as part of another Metal shader library.
 
 ```cmake
@@ -104,9 +117,6 @@ add_library(full_shader MODULE
 )
 ```
 
-> [!CAUTION]
-> TODO: Test and prove that this actually works for linking them up in later targets
-
 
 
 Embedding Shaders
@@ -117,21 +127,23 @@ As a final step to make your shader library available to your application, you w
 1. First, you need to ensure that the shader library itself is built as a dependency of the application target.
 
     ```cmake
-    add_executable(MyApp)
+    add_executable(MyApp MACOSX_BUNDLE)
+
     add_dependencies(MyApp
-        full_shader
+        shaders
     )
     ```
 
 2. Then you'll need to include the shader libraries as resources:
 
     ```cmake
+    # NOTE: This does not work!!!
     set(MyApp_SHADER_RESOURCES
-        $<TARGET_FILE:full_shader>
+        $<TARGET_FILE:shaders>
     )
 
     set_target_properties(MyApp PROPERTIES
-        RESOURCES "${MyApp_SHADER_RESOURCES}"
+        RESOURCE "${MyApp_SHADER_RESOURCES}"
     )
     ```
 
@@ -139,12 +151,12 @@ As a final step to make your shader library available to your application, you w
 
     ```cmake
     set_target_properties(MyApp PROPERTIES
-        XCODE_EMBED_RESOURCES full_shader
+        XCODE_EMBED_RESOURCES shaders
     )
     ```
 
-> [!CAUTION]
-> TODO: Test and prove that this actually works for linking them up in later targets
+> [!WARNING]
+> Need to figure out how to handle the resources for non-Xcode builds
 
 
 
