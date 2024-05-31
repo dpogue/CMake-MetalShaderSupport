@@ -3,6 +3,7 @@
 
 This project aims to allow compiling, linking, and embedding Apple Metal shader libraries in projects using CMake, without the need to write custom build steps or be restricted to only using the Xcode project generator.
 
+
 Project Setup
 -------------
 
@@ -36,6 +37,7 @@ Project Setup
     endif()
     ```
 
+
 Shader Library Setup
 --------------------
 
@@ -45,33 +47,22 @@ There are a few different ways to compose shader library targets, including some
 > **Shaders must be in their own CMake target!**  
 > You cannot mix them  with C++ or Objective-C code sources in a library or executable target.
 
-### Object Files (.air)
 
-You can compile shaders to a loose collection of `.air` bitcode files by defining an object library, and then include those shader objects as part of another Metal shader library.
+### Metal Libraries (.metallib)
+
+Your final shader library will need to be a `.metallib` file that can be included in your application as a resource. You should define these as `MODULE` libraries rather than `SHARED` libraries because they do not expose symbols that can be linked with other targets.
 
 ```cmake
-add_library(shader_base OBJECT
+add_library(full_shader MODULE
     shader1.metal
     shader2.metal
 )
 ```
 
-You can then reference those objects to be linked as part of another target:
-
-```cmake
-add_library(full_shader MODULE
-    another_shader.metal
-    $<TARGET_OBJECTS:shader_base>
-)
-```
-
-> [!CAUTION]
-> TODO: Test and prove that this actually works for linking them up in later targets
-
 
 ### Static Archives (.metal-ar)
 
-You can also compile shaders to a static archive as a `.metal-ar` file that can be linked together with other archives and shaders into a Metal library.
+You can compile shaders to a static archive as a `.metal-ar` file that can be linked together with other archives and shaders into a Metal library.
 
 ```cmake
 add_library(shader_base STATIC
@@ -96,16 +87,29 @@ target_link_libraries(full_shader
 > TODO: Test and prove that this actually works for linking them up in later targets
 
 
-### Metal Libraries (.metallib)
+### Object Files (.air)
 
-Your final shader library will need to be a `.metallib` file that can be included in your application as a resource. You should define these as `MODULE` libraries rather than `SHARED` libraries because they do not expose symbols that can be linked with other targets.
+You can also compile shaders to a loose collection of `.air` bitcode files by defining an object library, and then include those shader objects as part of another Metal shader library.
 
 ```cmake
-add_library(full_shader MODULE
+add_library(shader_base OBJECT
     shader1.metal
     shader2.metal
 )
 ```
+
+You can then reference those objects to be linked as part of another target:
+
+```cmake
+add_library(full_shader MODULE
+    another_shader.metal
+    $<TARGET_OBJECTS:shader_base>
+)
+```
+
+> [!CAUTION]
+> TODO: Test and prove that this actually works for linking them up in later targets
+
 
 
 Embedding Shaders
@@ -144,3 +148,20 @@ As a final step to make your shader library available to your application, you w
 
 > [!CAUTION]
 > TODO: Test and prove that this actually works for linking them up in later targets
+
+
+
+Remaining Work
+--------------
+
+* Handling the target and SDK parameters
+* Handling extra flags
+* Testing that this works with the Windows version of the Metal tools
+
+
+Licence
+-------
+
+TBD, but probably matching CMake since so much of this is outright copied from their existing code.
+
+The example project is based on sample code from Apple, under its own licence.
