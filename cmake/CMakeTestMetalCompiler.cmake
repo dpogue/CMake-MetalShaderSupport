@@ -1,3 +1,6 @@
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file LICENCE.txt or https://cmake.org/licensing for details.
+
 # CMakeTest(LANG)Compiler.cmake -> test the compiler and set:
 #     SET(CMAKE_(LANG)_COMPILER_WORKS 1 CACHE INTERNAL "")
 

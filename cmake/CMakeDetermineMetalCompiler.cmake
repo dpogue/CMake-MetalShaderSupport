@@ -1,3 +1,6 @@
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file LICENCE.txt or https://cmake.org/licensing for details.
+
 # CMakeDetermine(LANG)Compiler.cmake -> this should find the compiler for LANG and configure CMake(LANG)Compiler.cmake.in
 
 include(${CMAKE_ROOT}/Modules/CMakeDetermineCompiler.cmake)

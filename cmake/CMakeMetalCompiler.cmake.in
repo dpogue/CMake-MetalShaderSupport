@@ -1,3 +1,6 @@
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file LICENCE.txt or https://cmake.org/licensing for details.
+
 # CMake(LANG)Compiler.cmake.in  -> used by CMakeDetermine(LANG)Compiler.cmake
 # This file is used to store compiler information and is copied down into try
 # compile directories so that try compiles do not need to re-determine and test

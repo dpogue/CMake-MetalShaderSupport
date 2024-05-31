@@ -162,6 +162,10 @@ Remaining Work
 Licence
 -------
 
-TBD, but probably matching CMake since so much of this is outright copied from their existing code.
+CMake files are distributed under the OSI-approved BSD 3-clause License. See [LICENCE.txt][1] for details.
 
-The example project is based on sample code from Apple, under its own licence.
+The example project is based on sample code from Apple, under its own licence. See [LICENSE.txt][2] in the example folder for details.
+
+
+[1]: ./LICENCE.txt
+[2]: ./example/LICENSE.txt

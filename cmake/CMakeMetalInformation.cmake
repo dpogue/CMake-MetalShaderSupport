@@ -1,3 +1,6 @@
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file LICENCE.txt or https://cmake.org/licensing for details.
+
 #  CMake(LANG)Information.cmake  -> set up rule variables for LANG :
 #    CMAKE_(LANG)_CREATE_SHARED_LIBRARY
 #    CMAKE_(LANG)_CREATE_SHARED_MODULE
