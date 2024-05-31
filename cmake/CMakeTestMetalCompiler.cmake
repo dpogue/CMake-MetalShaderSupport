@@ -13,6 +13,12 @@ endif()
 
 include (CMakeTestCompilerCommon)
 
+if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
+    if(XCODE_VERSION VERSION_GREATER 7.0)
+        set(CMAKE_Metal_COMPILER_WORKS 1)
+    endif()
+endif()
+
 # This file is used by EnableLanguage in cmGlobalGenerator to
 # determine that that selected Metal compiler can actually compile
 # and link the most basic of programs.   If not, a fatal error
