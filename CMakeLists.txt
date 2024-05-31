@@ -10,8 +10,7 @@ check_language(Metal)
 if(CMAKE_Metal_COMPILER)
     enable_language(Metal)
 endif()
-project(metaltest)
 
-add_library(metaltest MODULE
-    shader.metal
-)
+project(MetalTest)
+
+add_subdirectory(example)
