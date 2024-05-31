@@ -9,6 +9,6 @@ if(CMAKE_Metal_COMPILER)
 endif()
 project(metaltest)
 
-add_library(metaltest 
+add_library(metaltest MODULE
     shader.metal
 )
