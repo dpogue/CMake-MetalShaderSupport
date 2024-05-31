@@ -78,13 +78,10 @@ add_library(full_shader MODULE
     another_shader.metal
 )
 target_link_libraries(full_shader
-    PRIVATE
+    PUBLIC
     shader_base
 )
 ```
-
-> [!CAUTION]
-> TODO: Test and prove that this actually works for linking them up in later targets
 
 
 ### Object Files (.air)
