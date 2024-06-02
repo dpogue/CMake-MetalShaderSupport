@@ -51,6 +51,7 @@ target_link_libraries(ExampleApp
     PRIVATE
     "-framework Cocoa"
     "-framework Metal"
+    "-framework MetalKit"
 )
 
 target_include_directories(ExampleApp
