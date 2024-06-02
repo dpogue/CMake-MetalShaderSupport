@@ -1,4 +1,4 @@
-:warning: INCOMPLETE! Metal Shader support for CMake
+Metal Shader support for CMake
 ==============================
 
 This project aims to allow compiling, linking, and embedding Apple Metal shader libraries in projects using CMake, without the need to write custom build steps or be restricted to only using the Xcode project generator.
