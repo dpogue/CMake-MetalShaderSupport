@@ -20,24 +20,6 @@ if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
     else()
         _cmake_find_compiler_path(Metal)
     endif()
-
-    execute_process(COMMAND xcrun --find metallib
-        OUTPUT_VARIABLE _xcrun_out OUTPUT_STRIP_TRAILING_WHITESPACE
-        ERROR_VARIABLE _xcrun_err RESULT_VARIABLE _xcrun_result)
-    if(_xcrun_result EQUAL 0 AND EXISTS "${_xcrun_out}")
-        set(CMAKE_Metal_COMPILER_LINKER "${_xcrun_out}")
-    else()
-        set(CMAKE_Metal_COMPILER_LINKER "${CMAKE_Metal_COMPILER}lib")
-    endif()
-
-    execute_process(COMMAND xcrun --find metal-ar
-        OUTPUT_VARIABLE _xcrun_out OUTPUT_STRIP_TRAILING_WHITESPACE
-        ERROR_VARIABLE _xcrun_err RESULT_VARIABLE _xcrun_result)
-    if(_xcrun_result EQUAL 0 AND EXISTS "${_xcrun_out}")
-        set(CMAKE_Metal_COMPILER_AR "${_xcrun_out}")
-    else()
-        set(CMAKE_Metal_COMPILER_AR "${CMAKE_Metal_COMPILER}-ar")
-    endif()
 else()
     if(CMAKE_Metal_COMPILER)
         _cmake_find_compiler_path(Metal)
@@ -61,10 +43,7 @@ else()
         _cmake_find_compiler(Metal)
     endif()
 
-    set(CMAKE_Metal_COMPILER_LINKER "${CMAKE_Metal_COMPILER}lib")
-    set(CMAKE_Metal_COMPILER_AR "${CMAKE_Metal_COMPILER}-ar")
-
-    mark_as_advanced(CMAKE_Metal_COMPILER CMAKE_Metal_COMPILER_LINKER CMAKE_Metal_COMPILER_AR)
+    mark_as_advanced(CMAKE_Metal_COMPILER)
 endif()
 
 # For Metal we need to explicitly query the version.
