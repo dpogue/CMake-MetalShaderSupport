@@ -4,7 +4,7 @@
 function(add_metal_shader_library TARGET)
     cmake_parse_arguments(PARSE_ARGV 1 _amsl
         ""
-        "" #TODO: support "STANDARD"
+        "STANDARD"
         ""
     )
 
@@ -16,6 +16,16 @@ function(add_metal_shader_library TARGET)
         XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=Debug] "INCLUDE_SOURCE"
         XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=RelWithDebInfo] "INCLUDE_SOURCE"
     )
+
+    if(_amsl_STANDARD AND _amsl_STANDARD MATCHES "metal([0-9]+)\.([0-9]+)")
+        target_compile_options(${TARGET}
+            PRIVATE "-std=${_amsl_STANDARD}"
+        )
+
+        set_target_properties(${TARGET} PROPERTIES
+            XCODE_ATTRIBUTE_MTL_LANGUAGE_REVISION "Metal${CMAKE_MATCH_1}${CMAKE_MATCH_2}"
+        )
+    endif()
 endfunction()
 
 function(target_embed_metal_shader_libraries TARGET)

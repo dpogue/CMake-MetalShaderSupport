@@ -10,6 +10,7 @@ set(ShaderBase_SOURCES
 )
 
 add_metal_shader_library(ShaderBase
+    STANDARD macos-metal2.1
     ${ShaderBase_SOURCES}
     ${ShaderBase_HEADERS}
 )

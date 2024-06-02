@@ -57,6 +57,16 @@ add_metal_shader_library(MyShaders
 )
 ```
 
+You can specify a Metal language version with the `STANDARD` attribute:
+
+```cmake
+add_metal_shader_library(MyShaders
+    STANDARD macos-metal2.3
+    shader1.metal
+    shader2.metal
+)
+```
+
 <details>
 <summary><h3>Implementation Details</h3></summary>
 
@@ -73,6 +83,15 @@ set_target_properties(MyShaders PROPERTIES
     XCODE_ATTRIBUTE_MTL_FAST_MATH "YES"
     XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=Debug] "INCLUDE_SOURCE"
     XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=RelWithDebInfo] "INCLUDE_SOURCE"
+)
+
+# If a target language version is provided:
+target_compile_options(MyShaders
+    PRIVATE "-std=macos-metal2.3"
+)
+
+set_target_properties(MyShaders PROPERTIES
+    XCODE_ATTRIBUTE_MTL_LANGUAGE_REVISION "Metal23"
 )
 ```
 
@@ -121,7 +140,7 @@ add_custom_command(TARGET MyApp POST_BUILD
 Remaining Work
 --------------
 
-* Handling the target and SDK parameters
+* Handling the SDK and min-version parameters
 * Testing that this works with the Windows version of the Metal tools
 
 
