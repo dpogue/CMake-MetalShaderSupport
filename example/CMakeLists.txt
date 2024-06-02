@@ -4,7 +4,6 @@
 
 if(CMAKE_Metal_COMPILER)
     add_subdirectory(ShaderBase)
-    #add_subdirectory(ShaderFull)
 
     if(APPLE)
         add_subdirectory(ExampleApp)
