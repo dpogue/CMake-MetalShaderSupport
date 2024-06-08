@@ -5,6 +5,8 @@ This project aims to allow compiling, linking, and embedding Apple Metal shader 
 
 The **MetalShaderSupport** module provides helper functions to create Metal shader library targets and embed shaders within application bundles.
 
+For background on this project, see my blog post [*Teaching CMake to Compile Apple Metal Shaders*](https://dpogue.ca/articles/cmake-metal.html).
+
 Project Setup
 -------------
 
