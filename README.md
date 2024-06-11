@@ -143,7 +143,6 @@ Remaining Work
 --------------
 
 * Handling the SDK and min-version parameters
-* Testing that this works with the Windows version of the Metal tools
 
 
 Licence
