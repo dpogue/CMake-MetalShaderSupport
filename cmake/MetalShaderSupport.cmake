@@ -15,6 +15,7 @@ function(add_metal_shader_library TARGET)
         XCODE_ATTRIBUTE_MTL_FAST_MATH "YES"
         XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=Debug] "INCLUDE_SOURCE"
         XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=RelWithDebInfo] "INCLUDE_SOURCE"
+        XCODE_ATTRIBUTE_MTL_HEADER_SEARCH_PATHS "$(HEADER_SEARCH_PATHS)"
     )
 
     if(_amsl_STANDARD AND _amsl_STANDARD MATCHES "metal([0-9]+)\.([0-9]+)")
@@ -37,7 +38,7 @@ function(target_embed_metal_shader_libraries TARGET)
 
     if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.28 AND ${CMAKE_GENERATOR} STREQUAL "Xcode")
         set_target_properties(${TARGET} PROPERTIES
-            XCODE_EMBED_RESOURCES ${_temsl_UNPARSED_ARGUMENTS}
+            XCODE_EMBED_RESOURCES "${_temsl_UNPARSED_ARGUMENTS}"
         )
     else()
         foreach(SHADERLIB IN LISTS _temsl_UNPARSED_ARGUMENTS)
