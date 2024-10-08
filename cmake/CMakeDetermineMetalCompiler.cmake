@@ -14,7 +14,9 @@ if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
 
     execute_process(COMMAND xcrun --find metal
         OUTPUT_VARIABLE _xcrun_out OUTPUT_STRIP_TRAILING_WHITESPACE
-        ERROR_VARIABLE _xcrun_err RESULT_VARIABLE _xcrun_result)
+        ERROR_VARIABLE _xcrun_err RESULT_VARIABLE _xcrun_result
+    )
+
     if(_xcrun_result EQUAL 0 AND EXISTS "${_xcrun_out}")
         set(CMAKE_Metal_COMPILER "${_xcrun_out}")
     else()
@@ -67,7 +69,7 @@ if(CMAKE_Metal_COMPILER AND NOT CMAKE_Metal_COMPILER_VERSION)
     endif()
 endif()
 
-if (NOT _CMAKE_TOOLCHAIN_LOCATION)
+if(NOT _CMAKE_TOOLCHAIN_LOCATION)
     get_filename_component(_CMAKE_TOOLCHAIN_LOCATION "${CMAKE_Metal_COMPILER}" PATH)
 endif ()
 

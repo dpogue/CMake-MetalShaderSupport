@@ -11,7 +11,7 @@ if(CMAKE_Metal_COMPILER_FORCED)
     return()
 endif()
 
-include (CMakeTestCompilerCommon)
+include(CMakeTestCompilerCommon)
 
 if("${CMAKE_GENERATOR}" STREQUAL "Xcode")
     if(XCODE_VERSION VERSION_GREATER 7.0)
@@ -33,7 +33,8 @@ if(NOT CMAKE_Metal_COMPILER_WORKS)
         "# error \"The CMAKE_Metal_COMPILER is not a Metal compiler\"\n"
         "#endif\n"
         "#import <metal_stdlib>\n"
-        "using namespace metal;\n")
+        "using namespace metal;\n"
+    )
 
     # Clear result from normal variable.
     unset(CMAKE_Metal_COMPILER_WORKS)
@@ -41,7 +42,8 @@ if(NOT CMAKE_Metal_COMPILER_WORKS)
     # Puts test result in cache variable.
     try_compile(CMAKE_Metal_COMPILER_WORKS
         SOURCE_FROM_VAR testMetalCompiler.metal __TestCompiler_testMetalCompilerSource
-        OUTPUT_VARIABLE __CMAKE_Metal_COMPILER_OUTPUT)
+        OUTPUT_VARIABLE __CMAKE_Metal_COMPILER_OUTPUT
+    )
     unset(__TestCompiler_testMetalCompilerSource)
 
     # Move result from cache to normal variable.
@@ -57,7 +59,8 @@ if(NOT CMAKE_Metal_COMPILER_WORKS)
     message(FATAL_ERROR "The Metal compiler\n  \"${CMAKE_Metal_COMPILER}\"\n"
         "is not able to compile a simple test program.\nIt fails "
         "with the following output:\n  ${_output}\n\n"
-        "CMake will not be able to correctly generate this project.")
+        "CMake will not be able to correctly generate this project."
+    )
 else()
     if(METAL_TEST_WAS_RUN)
         PrintTestCompilerResult(CHECK_PASS "works")
