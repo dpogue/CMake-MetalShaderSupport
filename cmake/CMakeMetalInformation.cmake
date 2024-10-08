@@ -8,7 +8,7 @@
 #    CMAKE_(LANG)_COMPILE_OBJECT
 #    CMAKE_(LANG)_LINK_EXECUTABLE
 
-include (CMakeCommonLanguageInclude)
+include(CMakeCommonLanguageInclude)
 
 set(CMAKE_Metal_FLAGS_INIT "-ffast-math")
 set(CMAKE_Metal_FLAGS_DEBUG_INIT "-gline-tables-only -frecord-sources")
@@ -59,20 +59,27 @@ endif()
 
 if(NOT CMAKE_Metal_COMPILE_OBJECT)
   set(CMAKE_Metal_COMPILE_OBJECT
-      "<CMAKE_Metal_COMPILER> -c <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT> <SOURCE>")
+      "<CMAKE_Metal_COMPILER> -c <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT> <SOURCE>"
+  )
 endif()
 
 if(NOT CMAKE_Metal_CREATE_SHARED_LIBRARY)
-    set(CMAKE_Metal_CREATE_SHARED_LIBRARY "<CMAKE_Metal_COMPILER> <CMAKE_SHARED_LIBRARY_Metal_FLAGS> <LANGUAGE_COMPILE_FLAGS> <CMAKE_SHARED_LIBRARY_CREATE_Metal_FLAGS> -o <TARGET> <OBJECTS> <LINK_LIBRARIES>")
+    set(CMAKE_Metal_CREATE_SHARED_LIBRARY
+        "<CMAKE_Metal_COMPILER> <CMAKE_SHARED_LIBRARY_Metal_FLAGS> <LANGUAGE_COMPILE_FLAGS> <CMAKE_SHARED_LIBRARY_CREATE_Metal_FLAGS> -o <TARGET> <OBJECTS> <LINK_LIBRARIES>"
+    )
 endif()
 
 if(NOT CMAKE_Metal_CREATE_SHARED_MODULE)
-    set(CMAKE_Metal_CREATE_SHARED_MODULE "${CMAKE_Metal_CREATE_SHARED_LIBRARY}")
+    set(CMAKE_Metal_CREATE_SHARED_MODULE
+        "${CMAKE_Metal_CREATE_SHARED_LIBRARY}"
+    )
 endif()
 
 if(NOT CMAKE_Metal_LINK_EXECUTABLE)
     # Metal shaders don't really have "executables", but we need this for the try_compile to work properly, so we'll just have it output a metallib file
-    set(CMAKE_Metal_LINK_EXECUTABLE "<CMAKE_Metal_COMPILER> <FLAGS> <CMAKE_Metal_LINK_FLAGS> -o <TARGET> <OBJECTS> <LINK_LIBRARIES>")
+    set(CMAKE_Metal_LINK_EXECUTABLE
+        "<CMAKE_Metal_COMPILER> <FLAGS> <CMAKE_Metal_LINK_FLAGS> -o <TARGET> <OBJECTS> <LINK_LIBRARIES>"
+    )
 endif()
 
 set(CMAKE_Metal_INFORMATION_LOADED 1)
