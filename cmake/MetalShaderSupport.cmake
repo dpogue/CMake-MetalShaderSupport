@@ -42,8 +42,8 @@ function(target_embed_metal_shader_libraries TARGET)
         )
     else()
         foreach(SHADERLIB IN LISTS _temsl_UNPARSED_ARGUMENTS)
+            add_dependencies(${TARGET} ${SHADERLIB})
             add_custom_command(TARGET ${TARGET} POST_BUILD
-                DEPENDS ${SHADERLIB}
                 COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${SHADERLIB}>" "$<TARGET_BUNDLE_CONTENT_DIR:${TARGET}>/Resources/$<TARGET_FILE_NAME:${SHADERLIB}>"
                 VERBATIM
             )
