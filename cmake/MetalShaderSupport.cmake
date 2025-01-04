@@ -11,6 +11,7 @@ function(add_metal_shader_library TARGET)
     add_library(${TARGET} MODULE ${_amsl_UNPARSED_ARGUMENTS})
 
     set_target_properties(${TARGET} PROPERTIES
+        DEBUG_POSTFIX ""
         XCODE_PRODUCT_TYPE com.apple.product-type.metal-library
         XCODE_ATTRIBUTE_MTL_FAST_MATH "YES"
         XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=Debug] "INCLUDE_SOURCE"
