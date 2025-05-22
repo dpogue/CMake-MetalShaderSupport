@@ -17,6 +17,8 @@ function(add_metal_shader_library TARGET)
         XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=Debug] "INCLUDE_SOURCE"
         XCODE_ATTRIBUTE_MTL_ENABLE_DEBUG_INFO[variant=RelWithDebInfo] "INCLUDE_SOURCE"
         XCODE_ATTRIBUTE_MTL_HEADER_SEARCH_PATHS "$(HEADER_SEARCH_PATHS)"
+        LANGUAGE Metal
+        LINKER_LANGUAGE Metal
     )
 
     if(_amsl_STANDARD AND _amsl_STANDARD MATCHES "metal([0-9]+)\.([0-9]+)")
