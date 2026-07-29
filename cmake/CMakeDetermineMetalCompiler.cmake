@@ -12,15 +12,20 @@ endif()
 if("${CMAKE_GENERATOR}" STREQUAL "Xcode" OR (APPLE AND CMAKE_VERSION VERSION_GREATER_EQUAL "4.0"))
     set(CMAKE_Metal_COMPILER_XCODE_TYPE sourcecode.metal)
 
-    execute_process(COMMAND xcrun --find metal
-        OUTPUT_VARIABLE _xcrun_out OUTPUT_STRIP_TRAILING_WHITESPACE
-        ERROR_VARIABLE _xcrun_err RESULT_VARIABLE _xcrun_result
-    )
-
-    if(_xcrun_result EQUAL 0 AND EXISTS "${_xcrun_out}")
-        set(CMAKE_Metal_COMPILER "${_xcrun_out}")
-    else()
+    if(CMAKE_Metal_COMPILER)
+        # Specified via -D or a pre-made cache, resolve it like the branch below.
         _cmake_find_compiler_path(Metal)
+    else()
+        execute_process(COMMAND xcrun --find metal
+            OUTPUT_VARIABLE _xcrun_out OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_VARIABLE _xcrun_err RESULT_VARIABLE _xcrun_result
+        )
+
+        if(_xcrun_result EQUAL 0 AND EXISTS "${_xcrun_out}")
+            set(CMAKE_Metal_COMPILER "${_xcrun_out}")
+        else()
+            _cmake_find_compiler_path(Metal)
+        endif()
     endif()
 else()
     if(CMAKE_Metal_COMPILER)
