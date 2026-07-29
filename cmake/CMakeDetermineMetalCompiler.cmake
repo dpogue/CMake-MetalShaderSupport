@@ -61,6 +61,22 @@ if(CMAKE_Metal_COMPILER AND NOT CMAKE_Metal_COMPILER_VERSION)
         "${output}\n"
     )
 
+    # Xcode ships a metal stub that xcrun happily reports even when the Metal
+    # Toolchain itself is missing, or when its on-demand cryptex mount is not
+    # available yet. Running the stub only prints
+    #   error: cannot execute tool 'metal' due to missing Metal Toolchain
+    # and exits non-zero, so reject it here. With the Xcode generator this is the
+    # only place that catches it, since CMakeTestMetalCompiler assumes a working
+    # compiler there and skips its try_compile; elsewhere it replaces a "compiler
+    # is broken" report, whose actual reason is buried in the try_compile output.
+    # CMAKE_Metal_COMPILER_FORCED opts out, as it does for the compiler test.
+    if(NOT result EQUAL 0 AND NOT CMAKE_Metal_COMPILER_FORCED)
+        string(STRIP "${output}" output)
+        string(REPLACE "\n" "\n  " output "${output}")
+        message(FATAL_ERROR "The Metal compiler\n  \"${CMAKE_Metal_COMPILER}\"\n"
+            "cannot be run:\n  ${output}\n")
+    endif()
+
     if(output MATCHES [[metal version ([0-9]+\.[0-9]+(\.[0-9]+)?)]])
         set(CMAKE_Metal_COMPILER_VERSION "${CMAKE_MATCH_1}")
         if(NOT CMAKE_Metal_COMPILER_ID)
